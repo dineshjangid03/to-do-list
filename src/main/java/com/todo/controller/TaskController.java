@@ -1,5 +1,7 @@
 package com.todo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +45,21 @@ public class TaskController {
 	public ResponseEntity<Task> editTask(@RequestBody Task task)throws TaskException{
 		return new ResponseEntity<Task>(ts.editTask(task),HttpStatus.OK);
 	}
+	
+	@PutMapping("/setComplanation/{taskId}/{isCompleted}")
+	public ResponseEntity<Task> setComplanation(@PathVariable("taskId") Long taskId, @PathVariable("isCompleted") Boolean isCompleted)throws TaskException{
+		return new ResponseEntity<Task>(ts.setComplanation(taskId, isCompleted),HttpStatus.OK);
+	}
+	
+	@GetMapping("/getCompletedTask/{userId}")
+	public ResponseEntity<List<Task>> completedTask(@PathVariable("userId") Long userId)throws TaskException,UserException{
+		return new ResponseEntity<List<Task>>(ts.completedTask(userId),HttpStatus.OK);
+	}
+	
+	@GetMapping("/getUnCompletedTask/{userId}")
+	public ResponseEntity<List<Task>> unCompletedTask(@PathVariable("userId") Long userId)throws TaskException,UserException{
+		return new ResponseEntity<List<Task>>(ts.unCompletedTask(userId),HttpStatus.OK);
+	}
+
 
 }
